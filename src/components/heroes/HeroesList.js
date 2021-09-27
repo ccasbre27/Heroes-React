@@ -1,22 +1,24 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { getHeroesByPublisher } from './../../selectors/getHeroesByPublisher';
 import { heroes } from './../../data/heroes';
+import { HeroCard } from './HeroCard';
 
 export const HeroesList = ({ publisher }) => {
 
-    const heroes = getHeroesByPublisher( publisher );
-
+    const heroes = useMemo(() => getHeroesByPublisher( publisher )
+    , [ publisher ])
+     
     return (
-        <ul>
+        <div className="container-fluid">
            {
                heroes.map( heroe => {
                    return (
-                    <li key={ heroe.id }>
-                       { heroe.superhero }
-                    </li>
+                    <HeroCard 
+                        key={ heroe.id }
+                            { ...heroe } />
                    )
                } )
            } 
-        </ul>
+        </div>
     )
 }
