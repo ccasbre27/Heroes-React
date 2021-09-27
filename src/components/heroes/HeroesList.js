@@ -9,7 +9,7 @@ export const HeroesList = ({ publisher }) => {
     , [ publisher ])
      
     return (
-        <div className="container-fluid">
+        <div className="container animate__animated animate__fadeIn">
            {
                heroes.map( heroe => {
                    return (
