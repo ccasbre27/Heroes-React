@@ -1,10 +1,26 @@
 import React, { useContext } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useHistory } from 'react-router-dom'
+import { types } from '../../types/types';
 import { AuthContext } from './../../auth/AuthContext';
 
 export const Navbar = () => {
 
-    const { user } = useContext( AuthContext );
+    const { user, dispatch } = useContext( AuthContext );
+    
+    // due to the navbar is out of the routing we should get the history in this way
+    const history = useHistory(); 
+
+    const handleLogout = () => {
+
+        dispatch({
+            action: types.logout
+        });
+
+        //localStorage.setItem('user', JSON.stringify({ logged: false }));
+
+        // this is an async process
+        history.replace('/login');
+    }
 
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -54,14 +70,12 @@ export const Navbar = () => {
                     <span className="nav-item nav-link table-info"> 
                     { user.name }
                     </span>
-                    <NavLink 
-                        activeClassName="active"
-                        className="nav-item nav-link" 
-                        exact
-                        to="/login"
+                    <button 
+                        className="btn nav-item nav-link" 
+                        onClick={ handleLogout }
                     >
                         Logout
-                    </NavLink>
+                    </button>
                 </ul>
             </div>
         </nav>
